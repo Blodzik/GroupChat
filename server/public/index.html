@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>  
+    <input id="mainInput" placeholder="Enter value..."  />
+    <button id="testBtn">Submit</button>
+    <div id="show" class="message"></div>
+    <ul id="messages"></ul>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+
+        const socket = io();
+
+        const button = document.getElementById("testBtn");
+        const inputVal = document.getElementById("mainInput");
+        const result = document.getElementById('show');
+
+        button.addEventListener('click', () => {
+            const msg = inputVal.value;
+            socket.emit('message', msg);
+            inputVal.value = '';
+            /* result.innerHTML = msg; */
+            console.log(msg)
+        })
+
+        socket.on("message", (msg) => {
+            const item = document.createElement('li');
+            item.textContent = msg;
+            messages.appendChild(item);
+        });
+
+    </script>
+    
+</body>
+</html>
